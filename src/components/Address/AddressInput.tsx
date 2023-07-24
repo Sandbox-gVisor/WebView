@@ -8,14 +8,14 @@ import { checkAddress, normalizeAddress } from "./address";
 
 export default function AddressInput() {
   const address = useSyncExternalStore(addressStore.subscribe, addressStore.getSnapshot);
-  const [value, setValue] = useState<string>(normalizeAddress(address.address));
+  const [value, setValue] = useState<string>(normalizeAddress(address));
   const [status, setStatus] = useState<"ok" | "error">("ok");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     addressStore.setAddress("ws://" + value)
     setValue(value)
-    if (checkAddress(address.address)) {
+    if (checkAddress(address)) {
       setStatus("error")
     } else {
       setStatus("ok");

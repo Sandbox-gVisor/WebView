@@ -1,9 +1,9 @@
-const address: { address: string } = { address: "localhost:8080/" };
+let address: string = "ws://localhost:8080";
 let listeners = [];
 
 export const addressStore = {
   setAddress(newAddress: string) {
-    address.address = newAddress;
+    address = newAddress;
     emitChange();
   },
   subscribe(listener: any) {
