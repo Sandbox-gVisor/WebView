@@ -1,11 +1,10 @@
 import {
   FormControl, OutlinedInput, InputLabel, InputAdornment,
-  Alert, Box, IconButton,
+  Alert, Box,
 } from "@mui/material";
 import { useState, useSyncExternalStore } from "react";
 import { addressStore } from "../../store/addressStore";
 import { checkAddress, normalizeAddress } from "./address";
-import { useWebSocketHook } from "@/utils";
 import ConnectButton from "./ConnectButton";
 
 export default function AddressInput() {
