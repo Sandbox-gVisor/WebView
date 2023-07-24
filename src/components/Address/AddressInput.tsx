@@ -1,10 +1,12 @@
 import {
   FormControl, OutlinedInput, InputLabel, InputAdornment,
-  Alert, Box
+  Alert, Box, IconButton,
 } from "@mui/material";
 import { useState, useSyncExternalStore } from "react";
 import { addressStore } from "../../store/addressStore";
 import { checkAddress, normalizeAddress } from "./address";
+import { useWebSocketHook } from "@/utils";
+import ConnectButton from "./ConnectButton";
 
 export default function AddressInput() {
   const address = useSyncExternalStore(addressStore.subscribe, addressStore.getSnapshot);
@@ -13,7 +15,6 @@ export default function AddressInput() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    addressStore.setAddress("ws://" + value)
     setValue(value)
     if (checkAddress(address)) {
       setStatus("error")
@@ -21,16 +22,26 @@ export default function AddressInput() {
       setStatus("ok");
     }
   }
+
+  const handleClick = () => {
+    if (status == "ok") {
+      addressStore.setAddress("ws://" + value);
+      console.log(value)
+    }
+  }
   return (
     <Box sx={{ display: "flex", justifyContent: 'center', flexDirection: 'column' }}>
       <FormControl fullWidth sx={{ m: 1 }}>
-        <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+        <InputLabel htmlFor="outlined-adornment-amount">WS address</InputLabel>
         <OutlinedInput
           id="outlined-adornment-amount"
           startAdornment={<InputAdornment position="start">ws://</InputAdornment>}
           label="Address"
           value={value}
           onChange={handleChange}
+          endAdornment={<InputAdornment position="end">
+            <ConnectButton onClick={handleClick} />
+          </InputAdornment>}
         />
       </FormControl>
       {(status == "error") &&

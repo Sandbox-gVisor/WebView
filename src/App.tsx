@@ -1,11 +1,11 @@
 import AddressInput from "./components/Address/AddressInput"
-import ConnectButton from "./components/Address/ConnectButton"
+import { useWebSocketHook } from "./utils"
 
 function App() {
+  const { } = useWebSocketHook();
   return (
     <>
       <AddressInput />
-      <ConnectButton />
     </>
   )
 }
