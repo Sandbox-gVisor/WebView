@@ -7,6 +7,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import { TLog } from '@/utils/types';
 import AdditionalInfo from "./AdditionalInfo";
+import Type from "./Type";
 
 export default function Row(props: { row: TLog }) {
   const { row } = props;
@@ -27,7 +28,7 @@ export default function Row(props: { row: TLog }) {
         <TableCell component="th" scope="row">
           {row.Taskname}
         </TableCell>
-        <TableCell align="left">{row.LogType}</TableCell>
+        <TableCell align="left"><Type type={row.LogType} /></TableCell>
         <TableCell align="right">{row.Syscallname}</TableCell>
         <TableCell align="right" sx={{
           width: 500, overflow: 'auto',

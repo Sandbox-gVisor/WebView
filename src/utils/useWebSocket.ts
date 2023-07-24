@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 export const useWebSocketHook = () => {
   const [logs, setLogs] = useState([]);
   const address = useSyncExternalStore(addressStore.subscribe, addressStore.getSnapshot);
+  const conn = useSyncExternalStore(connectionStore.subscribe, connectionStore.getSnapshot);
   const [isPaused, setPause] = useState(false);
   const ws = useRef(null);
 
@@ -13,6 +14,7 @@ export const useWebSocketHook = () => {
     console.log("address = ", address);
     ws.current = new WebSocket(address);
     ws.current.onopen = () => {
+      console.log("opened");
       ws.current.send("pull");
       connectionStore.setConnected(true);
     }
@@ -34,6 +36,9 @@ export const useWebSocketHook = () => {
       const value = JSON.parse(e.data);
       console.log(value);
       logStore.addLogs(value);
+      if (!conn.pulled) {
+        connectionStore.setPulled(true);
+      }
       // todo connectionStore is pulled
     };
   }, [isPaused]);
