@@ -2,20 +2,24 @@ import {
   FormControl, OutlinedInput, InputLabel, InputAdornment,
   Alert, Box,
 } from "@mui/material";
-import { useState, useSyncExternalStore } from "react";
-import { addressStore } from "../../store/addressStore";
+import { useState } from "react";
 import { checkAddress, normalizeAddress } from "./address";
 import ConnectButton from "./ConnectButton";
 
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { selectConnection, setAddress } from "@/store/connectionSlice";
+
 export default function AddressInput() {
-  const address = useSyncExternalStore(addressStore.subscribe, addressStore.getSnapshot);
-  const [value, setValue] = useState<string>(normalizeAddress(address));
+  const dispatch = useAppDispatch();
+  const currentConnection = useAppSelector(selectConnection);
+
+  const [value, setValue] = useState<string>(normalizeAddress(currentConnection.address));
   const [status, setStatus] = useState<"ok" | "error">("ok");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue(value)
-    if (checkAddress(address)) {
+    if (checkAddress("ws://" + value)) {
       setStatus("error")
     } else {
       setStatus("ok");
@@ -24,8 +28,7 @@ export default function AddressInput() {
 
   const handleClick = () => {
     if (status == "ok") {
-      addressStore.setAddress("ws://" + value);
-      console.log(value)
+      dispatch(setAddress("ws://" + value));
     }
   }
   return (

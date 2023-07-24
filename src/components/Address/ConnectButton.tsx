@@ -1,13 +1,14 @@
 import { IconButton, Tooltip } from "@mui/material";
-import { useSyncExternalStore } from "react";
-import connectionSvg from "@/assets/connect.svg";
-import { connectionStore } from "@/store/connectionStore";
 import { getConnOut } from "./connect";
+
+import connectionSvg from "@/assets/connect.svg";
+import { useAppSelector } from "@/app/hooks";
+import { selectConnection } from "@/store/connectionSlice";
 
 const BUTTON_SIZE = 48;
 
 export default function ConnectButton(props: { onClick: () => void }) {
-  const connection = useSyncExternalStore(connectionStore.subscribe, connectionStore.getSnapshot);
+  const connection = useAppSelector(selectConnection);
   const info = getConnOut(connection);
 
   return (
