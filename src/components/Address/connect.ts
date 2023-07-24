@@ -6,16 +6,14 @@ export type TConnOut = {
 }
 
 export const getConnOut = (connection: TConnection) => {
+  console.log(connection);
   const res: TConnOut = {
-    style: "success.main",
-    message: "Connected",
+    style: "error.main",
+    message: "Not connected",
   }
-  if (!connection.connected) {
-    res.style = "error.main";
-    res.message = "Disconnected";
-  } else if (!connection.pulled) {
-    res.style = "warning.main",
-      res.message = "Pulling...";
+  if (connection.pulled) {
+    res.style = "success.main";
+    res.message = "Connected";
   }
   return res;
 }

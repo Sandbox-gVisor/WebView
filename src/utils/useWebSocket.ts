@@ -1,48 +1,47 @@
-import { addressStore } from '@/store/addressStore';
-import { connectionStore } from '@/store/connectionStore';
-import { logStore } from '@/store/logStore';
-import { useState, useEffect, useRef, useSyncExternalStore } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { useAppSelector } from '@/app/hooks';
+import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
+import { addLog } from '@/store/logSlice';
+
 
 export const useWebSocketHook = () => {
-  const [logs, setLogs] = useState([]);
-  const address = useSyncExternalStore(addressStore.subscribe, addressStore.getSnapshot);
-  const conn = useSyncExternalStore(connectionStore.subscribe, connectionStore.getSnapshot);
+  const dispatch = useDispatch();
+  const conn = useAppSelector(selectConnection);
   const [isPaused, setPause] = useState(false);
   const ws = useRef(null);
 
   useEffect(() => {
-    console.log("address = ", address);
-    ws.current = new WebSocket(address);
+    ws.current = new WebSocket(conn.address);
     ws.current.onopen = () => {
       console.log("opened");
       ws.current.send("pull");
-      connectionStore.setConnected(true);
     }
-    ws.current.onclose = () => connectionStore.setConnected(false);
+    ws.current.onclose = () => dispatch(setConnected(false));
 
     const wsCurrent = ws.current;
 
     return () => {
       wsCurrent.close();
     };
-  }, [address]);
+  }, [conn.addressStatus]);
 
   useEffect(() => {
     if (!ws.current) return;
 
     ws.current.onmessage = e => {
       if (isPaused) return;
-      console.log(e.data)
+      console.log(e.data);
       const value = JSON.parse(e.data);
       console.log(value);
-      logStore.addLogs(value);
+
+      dispatch(addLog(value));
+
       if (!conn.pulled) {
-        connectionStore.setPulled(true);
+        dispatch(setPulled(true));
       }
-      // todo connectionStore is pulled
     };
-  }, [isPaused]);
-  return {
-    logs
-  };
+  }, [conn]);
+  return { isPaused };
 };

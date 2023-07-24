@@ -7,7 +7,7 @@ import { checkAddress, normalizeAddress } from "./address";
 import ConnectButton from "./ConnectButton";
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { selectConnection, setAddress } from "@/store/connectionSlice";
+import { selectConnection, setAddress, connectToSocket } from "@/store/connectionSlice";
 
 export default function AddressInput() {
   const dispatch = useAppDispatch();
@@ -17,20 +17,22 @@ export default function AddressInput() {
   const [status, setStatus] = useState<"ok" | "error">("ok");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValue(value)
-    if (checkAddress("ws://" + value)) {
+    setValue(event.target.value);
+    const newAddress = "ws://" + event.target.value;
+    if (checkAddress(newAddress)) {
       setStatus("error")
     } else {
+      dispatch(setAddress(newAddress));
       setStatus("ok");
     }
   }
 
   const handleClick = () => {
     if (status == "ok") {
-      dispatch(setAddress("ws://" + value));
+      dispatch(connectToSocket());
     }
   }
+
   return (
     <Box sx={{ display: "flex", justifyContent: 'center', flexDirection: 'column' }}>
       <FormControl fullWidth sx={{ m: 1 }}>
