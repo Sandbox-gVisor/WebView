@@ -1,4 +1,4 @@
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { useSyncExternalStore } from "react";
 import connectionSvg from "@/assets/connect.svg";
 import { connectionStore } from "@/store/connectionStore";
