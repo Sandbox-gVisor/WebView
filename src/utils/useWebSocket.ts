@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 
 import { useAppSelector } from '@/app/hooks';
-import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
+import { selectConnection } from '@/store/connectionSlice';
 import { addLog } from '@/store/logSlice';
+import { TMessege, messgeToLog } from './types';
 
 
 export const useWebSocketHook = () => {
@@ -12,7 +13,17 @@ export const useWebSocketHook = () => {
   const conn = useAppSelector(selectConnection);
   const [isPaused, setPause] = useState(false);
   const ws = useRef(null);
-  console.log("status = ", conn.addressStatus);
+
+  const receiveLogs = (data: string) => {
+    console.log(data)
+    const message: TMessege = JSON.parse(data);
+    if (!message) {
+      return
+    }
+    dispatch(addLog(
+      messgeToLog(message)
+    ));
+  }
 
   useEffect(() => {
     if (conn.addressStatus)
@@ -23,18 +34,16 @@ export const useWebSocketHook = () => {
     if (!ws.current) return;
 
     ws.current.on('message', (data) => {
-      console.log(data);
+      receiveLogs(data);
     });
 
     ws.current.on('page_size', (data) => {
-      console.log(data);
+      receiveLogs(data);
     });
 
     ws.current.on('page_index', (data) => {
-      console.log(data);
+      receiveLogs(data);
     });
-
-
 
   }, [conn]);
   return { isPaused };
