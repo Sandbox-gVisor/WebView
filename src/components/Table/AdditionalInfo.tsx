@@ -27,9 +27,12 @@ export default function AdditionalInfo({ info }: { info: TRval | null }) {
       </Typography>
       <Table size="small" aria-label="purchases">
         <TableBody>
-          {createRow("Return value", info.Retval)}
-          {createRow("Error", info.Err)}
-          {createRow("Errno", info.Errno)}
+          {createRow("Return value", info.Retval.join("\n"))}
+          {!info.Errno && <>
+            {createRow("Error", info.Err)}
+            {createRow("Errno", info.Errno)}
+          </>
+          }
           {createRow("Elapsed", info.Elapsed)}
         </TableBody>
       </Table>

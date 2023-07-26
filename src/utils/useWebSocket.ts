@@ -1,47 +1,70 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import io from 'socket.io-client';
 
 import { useAppSelector } from '@/app/hooks';
 import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
-import { addLog } from '@/store/logSlice';
+import { addLog, selectLogs, setLength } from '@/store/logSlice';
+import { messageToLog } from './types';
 
 
 export const useWebSocketHook = () => {
   const dispatch = useDispatch();
   const conn = useAppSelector(selectConnection);
-  const [isPaused, setPause] = useState(false);
+  const logStore = useAppSelector(selectLogs);
+  const [isPaused] = useState(false);
   const ws = useRef(null);
 
-  useEffect(() => {
-    ws.current = new WebSocket(conn.address);
-    ws.current.onopen = () => {
-      console.log("opened");
-      ws.current.send("pull");
+  const receiveLogs = (data: any) => {
+    console.log(data)
+    const newLog = {
+      index: data.index,
+      log: messageToLog(JSON.parse(data.log)),
     }
-    ws.current.onclose = () => dispatch(setConnected(false));
+    dispatch(addLog(newLog));
+    dispatch(setPulled(true));
+  }
 
-    const wsCurrent = ws.current;
-
-    return () => {
-      wsCurrent.close();
-    };
+  useEffect(() => {
+    if (conn.addressStatus)
+      // @ts-ignore
+      ws.current = io(conn.address);
+    dispatch(setConnected(true));
   }, [conn.addressStatus]);
 
   useEffect(() => {
     if (!ws.current) return;
-
-    ws.current.onmessage = e => {
-      if (isPaused) return;
-      console.log(e.data);
-      const value = JSON.parse(e.data);
-      console.log(value);
-
-      dispatch(addLog(value));
-
-      if (!conn.pulled) {
-        dispatch(setPulled(true));
-      }
-    };
+    ws.current.on('data', (data) => {
+      receiveLogs(data);
+    });
+    //
+    // // @ts-ignore
+    // ws.current.on('page_size', (data) => {
+    //   receiveLogs(data);
+    // });
+    //
+    // // @ts-ignore
+    // ws.current.on('page_index', (data) => {
+    //   receiveLogs(data);
+    // });
+    //
+    // @ts-ignore
+    ws.current.on('length', (data) => {
+      dispatch(setLength(Number(data)));
+    });
   }, [conn]);
+
+  useEffect(() => {
+    if (!ws.current) return;
+    // @ts-ignore
+    ws.current.emit("set_page", logStore.pageIndex);
+  }, [logStore.pageIndex]);
+
+  useEffect(() => {
+    if (!ws.current) return;
+    // @ts-ignore
+    ws.current.emit("set_size", logStore.pageSize);
+  }, [logStore.pageSize]);
+
   return { isPaused };
 };
