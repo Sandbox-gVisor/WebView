@@ -32,7 +32,7 @@ export type TLog = {
 };
 
 
-export function messgeToLog(messege: TMessege) {
+export function messageToLog(messege: TMessege) {
   return {
     ...messege.msg, level: messege.level, time: messege.time
   }

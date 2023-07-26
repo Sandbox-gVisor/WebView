@@ -8,8 +8,8 @@ export default function Header() {
     <TableHead>
       <TableRow>
         <TableCell />
-        <TableCell align="left">Time</TableCell>
         <TableCell align="center">Level</TableCell>
+        <TableCell align="center">Time</TableCell>
         <TableCell>LogPrefix</TableCell>
         <TableCell>Taskname</TableCell>
         <TableCell align="right">SysCallName</TableCell>

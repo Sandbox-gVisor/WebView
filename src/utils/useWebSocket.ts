@@ -3,48 +3,66 @@ import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 
 import { useAppSelector } from '@/app/hooks';
-import { selectConnection } from '@/store/connectionSlice';
-import { addLog } from '@/store/logSlice';
-import { TMessege, messgeToLog } from './types';
+import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
+import { addLog, selectLogs, setLength } from '@/store/logSlice';
+import { messageToLog } from './types';
 
 
 export const useWebSocketHook = () => {
   const dispatch = useDispatch();
   const conn = useAppSelector(selectConnection);
-  const [isPaused, setPause] = useState(false);
+  const logStore = useAppSelector(selectLogs);
+  const [isPaused] = useState(false);
   const ws = useRef(null);
 
   const receiveLogs = (data: string) => {
-    console.log(data)
-    const message: TMessege = JSON.parse(data);
-    if (!message) {
-      return
-    }
-    dispatch(addLog(
-      messgeToLog(message)
-    ));
+    dispatch(addLog(messageToLog(JSON.parse(data))));
+    dispatch(setPulled(
+      true
+    ))
   }
 
   useEffect(() => {
     if (conn.addressStatus)
+      // @ts-ignore
       ws.current = io(conn.address);
+    dispatch(setConnected(true));
   }, [conn.addressStatus]);
 
   useEffect(() => {
     if (!ws.current) return;
-
-    ws.current.on('message', (data) => {
+    ws.current.on('data', (data) => {
+      console.log("message = ", data);
       receiveLogs(data);
     });
-
-    ws.current.on('page_size', (data) => {
-      receiveLogs(data);
+    //
+    // // @ts-ignore
+    // ws.current.on('page_size', (data) => {
+    //   receiveLogs(data);
+    // });
+    //
+    // // @ts-ignore
+    // ws.current.on('page_index', (data) => {
+    //   receiveLogs(data);
+    // });
+    //
+    // @ts-ignore
+    ws.current.on('length', (data) => {
+      dispatch(setLength(Number(data)));
     });
-
-    ws.current.on('page_index', (data) => {
-      receiveLogs(data);
-    });
-
   }, [conn]);
+
+  useEffect(() => {
+    if (!ws.current) return;
+    // @ts-ignore
+    ws.current.emit("set_page", logStore.pageIndex);
+  }, [logStore.pageIndex]);
+
+  useEffect(() => {
+    if (!ws.current) return;
+    // @ts-ignore
+    ws.current.emit("set_size", logStore.pageSize);
+  }, [logStore.pageSize]);
+
   return { isPaused };
 };

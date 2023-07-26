@@ -30,8 +30,8 @@ export default function Row(props: { row: TLog }) {
             </IconButton>
           }
         </TableCell>
-        <TableCell align="left"><Time time={row.time} /></TableCell>
         <TableCell align="center"><Level level={row.level} /></TableCell>
+        <TableCell align="left"><Time time={row.time} /></TableCell>
         <TableCell align="left">{row.LogPrefix}</TableCell>
         <TableCell align="left">{row.Taskname}</TableCell>
         <TableCell align="left">{row.Syscallname}</TableCell>

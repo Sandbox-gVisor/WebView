@@ -34,7 +34,10 @@ export default function AddressInput() {
   }
 
   return (
-    <Box sx={{ display: "flex", justifyContent: 'center', flexDirection: 'column' }}>
+    <Box sx={{
+      display: "flex", justifyContent: 'center', flexDirection: 'column',
+      paddingLeft: 2, paddingRight: 4, paddingTop: 1
+    }}>
       <FormControl fullWidth sx={{ m: 1 }}>
         <InputLabel htmlFor="outlined-adornment-amount">WS address</InputLabel>
         <OutlinedInput
