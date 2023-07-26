@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import io from 'socket.io-client';
 
 import { useAppSelector } from '@/app/hooks';
 import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
@@ -11,37 +12,30 @@ export const useWebSocketHook = () => {
   const conn = useAppSelector(selectConnection);
   const [isPaused, setPause] = useState(false);
   const ws = useRef(null);
+  console.log("status = ", conn.addressStatus);
 
   useEffect(() => {
-    ws.current = new WebSocket(conn.address);
-    ws.current.onopen = () => {
-      console.log("opened");
-      ws.current.send("pull");
-    }
-    ws.current.onclose = () => dispatch(setConnected(false));
-
-    const wsCurrent = ws.current;
-
-    return () => {
-      wsCurrent.close();
-    };
+    if (conn.addressStatus)
+      ws.current = io(conn.address);
   }, [conn.addressStatus]);
 
   useEffect(() => {
     if (!ws.current) return;
 
-    ws.current.onmessage = e => {
-      if (isPaused) return;
-      console.log(e.data);
-      const value = JSON.parse(e.data);
-      console.log(value);
+    ws.current.on('message', (data) => {
+      console.log(data);
+    });
 
-      dispatch(addLog(value));
+    ws.current.on('page_size', (data) => {
+      console.log(data);
+    });
 
-      if (!conn.pulled) {
-        dispatch(setPulled(true));
-      }
-    };
+    ws.current.on('page_index', (data) => {
+      console.log(data);
+    });
+
+
+
   }, [conn]);
   return { isPaused };
 };
