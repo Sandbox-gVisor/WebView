@@ -14,18 +14,21 @@ import Time from "./Time";
 export default function Row(props: { row: TLog }) {
   const { row } = props;
   const [open, setOpen] = useState(false);
+  const hasAdditional = row.LogType == "X";
 
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
+          {hasAdditional &&
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          }
         </TableCell>
         <TableCell align="left"><Time time={row.time} /></TableCell>
         <TableCell align="center"><Level level={row.level} /></TableCell>
@@ -40,7 +43,7 @@ export default function Row(props: { row: TLog }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <AdditionalInfo info={!row.Rval.Elapsed ? null : row.Rval} />
+            <AdditionalInfo info={hasAdditional ? row.Rval : null} />
           </Collapse>
         </TableCell>
       </TableRow>
