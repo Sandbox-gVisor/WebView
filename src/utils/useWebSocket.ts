@@ -15,11 +15,14 @@ export const useWebSocketHook = () => {
   const [isPaused] = useState(false);
   const ws = useRef(null);
 
-  const receiveLogs = (data: string) => {
-    dispatch(addLog(messageToLog(JSON.parse(data))));
-    dispatch(setPulled(
-      true
-    ))
+  const receiveLogs = (data: any) => {
+    console.log(data)
+    const newLog = {
+      index: data.index,
+      log: messageToLog(JSON.parse(data.log)),
+    }
+    dispatch(addLog(newLog));
+    dispatch(setPulled(true));
   }
 
   useEffect(() => {
@@ -32,7 +35,6 @@ export const useWebSocketHook = () => {
   useEffect(() => {
     if (!ws.current) return;
     ws.current.on('data', (data) => {
-      console.log("message = ", data);
       receiveLogs(data);
     });
     //
