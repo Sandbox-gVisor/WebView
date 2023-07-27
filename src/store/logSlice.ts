@@ -20,8 +20,8 @@ export const logSlice = createSlice({
   name: 'logs',
   initialState,
   reducers: {
-    addLog: (state, action: PayloadAction<{ index: number, log: TLog }>) => {
-      state.logs[action.payload.index] = action.payload.log;
+    setLogs: (state, action: PayloadAction<Array<TLog>>) => {
+      state.logs = action.payload;
     },
     setPageIndex: (state, action: PayloadAction<number>) => {
       state.pageIndex = action.payload;
@@ -37,7 +37,7 @@ export const logSlice = createSlice({
   },
 });
 
-export const { addLog, setPageSize, setPageIndex, setLength, setLogs } = logSlice.actions;
+export const { setLogs, setPageSize, setPageIndex, setLength } = logSlice.actions;
 
 export const selectLogs = (state: RootState) => state.logs;
 export default logSlice.reducer;

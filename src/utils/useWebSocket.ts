@@ -4,24 +4,23 @@ import io from 'socket.io-client';
 
 import { useAppSelector } from '@/app/hooks';
 import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
-import { addLog, selectLogs, setLength } from '@/store/logSlice';
-import { messageToLog } from './types';
+import { setLogs, selectLogs, setLength } from '@/store/logSlice';
+import { selectFilter } from '@/store/filterSlice';
 
 
 export const useWebSocketHook = () => {
   const dispatch = useDispatch();
   const conn = useAppSelector(selectConnection);
   const logStore = useAppSelector(selectLogs);
+  const filterStore = useAppSelector(selectFilter);
   const [isPaused] = useState(false);
   const ws = useRef(null);
 
+  // @ts-ignore
   const receiveLogs = (data: any) => {
-    console.log(data)
-    const newLog = {
-      index: data.index,
-      log: messageToLog(JSON.parse(data.log)),
-    }
-    dispatch(addLog(newLog));
+    const logs = data;
+    console.log(logs);
+    dispatch(setLogs(logs));
     dispatch(setPulled(true));
   }
 
@@ -34,20 +33,10 @@ export const useWebSocketHook = () => {
 
   useEffect(() => {
     if (!ws.current) return;
+    // @ts-ignore
     ws.current.on('data', (data) => {
       receiveLogs(data);
     });
-    //
-    // // @ts-ignore
-    // ws.current.on('page_size', (data) => {
-    //   receiveLogs(data);
-    // });
-    //
-    // // @ts-ignore
-    // ws.current.on('page_index', (data) => {
-    //   receiveLogs(data);
-    // });
-    //
     // @ts-ignore
     ws.current.on('length', (data) => {
       dispatch(setLength(Number(data)));
@@ -65,6 +54,13 @@ export const useWebSocketHook = () => {
     // @ts-ignore
     ws.current.emit("set_size", logStore.pageSize);
   }, [logStore.pageSize]);
+
+  useEffect(() => {
+    if (!ws.current) return;
+    // @ts-ignore
+    ws.current.emit("filter", filterStore);
+    dispatch(setLogs([]));
+  }, [filterStore]);
 
   return { isPaused };
 };

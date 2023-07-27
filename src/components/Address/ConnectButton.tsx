@@ -10,6 +10,7 @@ const BUTTON_SIZE = 48;
 export default function ConnectButton(props: { onClick: () => void }) {
   const connection = useAppSelector(selectConnection);
   const info = getConnOut(connection);
+  console.log(info.style)
 
   return (
     <Tooltip title={info.message} arrow>
