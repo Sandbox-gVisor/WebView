@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import connectionReducer from '@/store/connectionSlice';
 import logReducer from '@/store/logSlice';
+import filterReducer from '@/store/filterSlice';
 
 export const store = configureStore({
   reducer: {
     connection: connectionReducer,
-    logs: logReducer
+    logs: logReducer,
+    filter: filterReducer
   },
 });
 
