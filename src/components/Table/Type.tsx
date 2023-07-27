@@ -2,10 +2,10 @@ import { Chip } from "@mui/material";
 
 export default function Type(props: { type: string }) {
   let label: string = "enter";
-  let color: string = "success";
+  let color: string = "primary";
   if (props.type == "X") { // exit
     label = "exit";
-    color = "error";
+    color = "secondary";
   }
-  return <Chip label={label} color={color} variant="outlined" sx={{ width: "100%" }} />
+  return <Chip label={label} color={color} variant="filled" sx={{ width: "100%" }} />
 }

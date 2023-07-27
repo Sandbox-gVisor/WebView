@@ -15,7 +15,6 @@ export default function Header() {
         <TableCell align="right">SysCallName</TableCell>
         <TableCell align="right">LogType</TableCell>
         <TableCell align="right">Output</TableCell>
-
       </TableRow>
     </TableHead>
   );
