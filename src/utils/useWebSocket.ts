@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 import { useAppSelector } from '@/app/hooks';
 import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
-import { addLog, selectLogs, setLength } from '@/store/logSlice';
+import { setLogs, selectLogs, setLength } from '@/store/logSlice';
 import { messageToLog } from './types';
 
 
@@ -15,13 +15,11 @@ export const useWebSocketHook = () => {
   const [isPaused] = useState(false);
   const ws = useRef(null);
 
+  // @ts-ignore
   const receiveLogs = (data: any) => {
-    console.log(data)
-    const newLog = {
-      index: data.index,
-      log: messageToLog(JSON.parse(data.log)),
-    }
-    dispatch(addLog(newLog));
+    const logs = data.map(log => messageToLog(JSON.parse(log)));
+    console.log(logs);
+    dispatch(setLogs(logs));
     dispatch(setPulled(true));
   }
 
