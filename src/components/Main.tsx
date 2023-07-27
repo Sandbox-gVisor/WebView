@@ -13,8 +13,10 @@ export default function Main() {
         display: "flex", flexDirection: "column",
         justifyContent: "space-between", padding: 4
       }}>
-        <Filter />
-        <Table />
+        <Box>
+          <Filter />
+          <Table />
+        </Box>
         <Pagginator />
       </Box>
     </Box>

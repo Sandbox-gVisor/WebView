@@ -1,48 +1,49 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {
+  Box, OutlinedInput, InputLabel, MenuItem, FormControl, Chip
+} from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function ParamSelect(props: { items: Array<string>, label: string }) {
-  const [checked, setChecked] = React.useState([true, true, true]);
 
-  const handleChangeMain = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, event.target.checked, event.target.checked]);
+export default function ParamSelect(props: { items: string[], label: string }) {
+  const [item, setItem] = React.useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof item>) => {
+    const {
+      target: { value },
+    } = event;
+    setItem(
+      typeof value === 'string' ? value.split(',') : value,
+    );
   };
-
-  const handleChangeItem = (index: number) => {
-    const newChecked = [false, false, false];
-    for (let i = 0; i < props.items.length; ++i) {
-      if (i == index) {
-        newChecked[i] = !checked[i];
-        continue;
-      }
-      newChecked[i] = checked[i];
-    }
-    setChecked(newChecked);
-  }
-
-  const checkSize = props.items.filter((_, i) => checked[i]).length;
 
   return (
     <div>
-      <FormControlLabel
-        label={props.label}
-        control={
-          <Checkbox
-            checked={checkSize == props.items.length}
-            indeterminate={checkSize > 0 && checkSize < props.items.length}
-            onChange={handleChangeMain}
-          />
-        }
-      />
-      <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-        {props.items.map((item, index) => <FormControlLabel
-          label={item}
-          control={<Checkbox checked={checked[index]} onChange={() => handleChangeItem(index)} />}
-        />)}
-      </Box>
-
+      <FormControl sx={{ m: 1, width: 120 }} size='small'>
+        <InputLabel>{props.label}</InputLabel>
+        <Select
+          multiple
+          value={item}
+          onChange={handleChange}
+          input={<OutlinedInput label={props.label} />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+        >
+          {props.items.map((name) => (
+            <MenuItem
+              key={name}
+              value={name}
+            >
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 }
