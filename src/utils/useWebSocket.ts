@@ -17,7 +17,7 @@ export const useWebSocketHook = () => {
 
   // @ts-ignore
   const receiveLogs = (data: any) => {
-    const logs = data.map(log => messageToLog(JSON.parse(log)));
+    const logs = data;
     console.log(logs);
     dispatch(setLogs(logs));
     dispatch(setPulled(true));

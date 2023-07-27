@@ -1,9 +1,13 @@
 import {
+  Button,
+  IconButton,
   Paper, Stack,
 } from "@mui/material";
 import ParamSelect from "./ParamSelect";
 import RegexFilter from "./Regex";
 
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export default function Filter() {
   return (
@@ -16,6 +20,10 @@ export default function Filter() {
       <RegexFilter label="TaskName regex" />
       <RegexFilter label="SysCallName regex" />
       <ParamSelect items={["enter", "exit"]} label="Type" />
+      <Stack>
+        <IconButton color="success"><CheckIcon /></IconButton>
+        <IconButton color="error"><ClearIcon /></IconButton>
+      </Stack>
     </Stack>
   );
 }

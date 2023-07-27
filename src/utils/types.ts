@@ -5,21 +5,6 @@ export type TRval = {
   Elapsed: string,
 };
 
-type TLogValue = {
-  LogPrefix: string;
-  LogType: string,
-  Taskname: string,
-  Syscallname: string,
-  Output: Array<string>,
-  Rval: TRval
-};
-
-export type TMessege = {
-  msg: TLogValue,
-  level: string,
-  time: string,
-};
-
 export type TLog = {
   LogPrefix: string;
   LogType: string,
@@ -31,9 +16,3 @@ export type TLog = {
   time: string;
 };
 
-
-export function messageToLog(messege: TMessege) {
-  return {
-    ...messege.msg, level: messege.level, time: messege.time
-  }
-}
