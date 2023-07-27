@@ -21,14 +21,14 @@ export default function Filter() {
       marginBottom: 4
     }} component={Paper}>
       <ParamSelect
-        items={["info", "debug", "warning"]} label="Level"
+        items={["info", "debug", "warning"]} label="Level" type="level"
         submitParams={level => dispatch(setLevel(level))}
       />
       <RegexFilter label="LogPrefix regex" submitRegex={regex => dispatch(setPrefix(regex))} />
       <RegexFilter label="TaskName regex" submitRegex={regex => dispatch(setTaskname(regex))} />
       <RegexFilter label="SysCallName regex" submitRegex={regex => dispatch(setSysCallName(regex))} />
       <ParamSelect
-        items={["enter", "exit"]} label="Type"
+        items={["enter", "exit"]} label="Type" type="type"
         submitParams={type => dispatch(setType(type))}
       />
       <Stack>

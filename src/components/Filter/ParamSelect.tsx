@@ -5,29 +5,39 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
-export default function ParamSelect(props: { items: string[], label: string, submitParams: (object: any) => void }) {
+interface ISelcetProps {
+  items: string[],
+  label: string,
+  submitParams: (object: any) => void,
+  type: "type" | "level"
+}
+
+export default function ParamSelect(props: ISelcetProps) {
   const [item, setItem] = React.useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof item>) => {
     const {
       target: { value },
     } = event;
-    setItem(
-      typeof value === 'string' ? value.split(',') : value,
-    );
-
-    submit();
+    const newValue = typeof value === 'string' ? value.split(',') : value;
+    setItem(newValue);
+    submit(newValue);
   };
 
-  const submit = () => {
-    const object = {};
-    props.items.map(
-      (item, i) => Object.defineProperty(object, item, {
-        value: item[i],
-        writable: false
-      })
-    );
-    props.submitParams(object);
+  const submit = (value: string[]) => {
+    console.log(value);
+    if (props.type == "level") {
+      props.submitParams({
+        info: value.includes("info"),
+        debug: value.includes("debug"),
+        warning: value.includes("warning")
+      });
+    } else {
+      props.submitParams({
+        enter: value.includes("enter"),
+        exit: value.includes("exit"),
+      });
+    }
   }
 
   return (
