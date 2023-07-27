@@ -1,5 +1,4 @@
 import {
-  Button,
   IconButton,
   Paper, Stack,
 } from "@mui/material";
@@ -8,21 +7,37 @@ import RegexFilter from "./Regex";
 
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useDispatch } from "react-redux";
+import {
+  setApplyed, setType, setLevel, setPrefix,
+  setTaskname, setSysCallName
+} from "@/store/filterSlice";
 
 export default function Filter() {
+  const dispatch = useDispatch();
   return (
     <Stack direction="row" spacing={2} sx={{
       alignItems: "center", width: "min-content", alignSelf: "center",
       marginBottom: 4
     }} component={Paper}>
-      <ParamSelect items={["info", "debug", "warning"]} label="Level" />
-      <RegexFilter label="LogPrefix regex" />
-      <RegexFilter label="TaskName regex" />
-      <RegexFilter label="SysCallName regex" />
-      <ParamSelect items={["enter", "exit"]} label="Type" />
+      <ParamSelect
+        items={["info", "debug", "warning"]} label="Level"
+        submitParams={level => dispatch(setLevel(level))}
+      />
+      <RegexFilter label="LogPrefix regex" submitRegex={regex => dispatch(setPrefix(regex))} />
+      <RegexFilter label="TaskName regex" submitRegex={regex => dispatch(setTaskname(regex))} />
+      <RegexFilter label="SysCallName regex" submitRegex={regex => dispatch(setSysCallName(regex))} />
+      <ParamSelect
+        items={["enter", "exit"]} label="Type"
+        submitParams={type => dispatch(setType(type))}
+      />
       <Stack>
-        <IconButton color="success"><CheckIcon /></IconButton>
-        <IconButton color="error"><ClearIcon /></IconButton>
+        <IconButton color="success" onClick={() => dispatch(setApplyed(true))}>
+          <CheckIcon />
+        </IconButton>
+        <IconButton color="error" onClick={() => dispatch(setApplyed(true))}>
+          <ClearIcon />
+        </IconButton>
       </Stack>
     </Stack>
   );
