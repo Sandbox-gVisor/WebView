@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
-import { act } from 'react-dom/test-utils';
 
 export interface FilterState {
   applyed: boolean;
