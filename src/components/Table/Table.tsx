@@ -4,7 +4,7 @@ import Row from "./Row";
 
 import { TLog } from "@/utils/types";
 import { useAppSelector } from "@/app/hooks";
-import { selectLogs, setLogs } from "@/store/logSlice";
+import { selectLogs } from "@/store/logSlice";
 
 export default function CustomTable() {
   const logStore = useAppSelector(selectLogs);

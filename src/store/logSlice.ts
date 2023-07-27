@@ -37,7 +37,7 @@ export const logSlice = createSlice({
   },
 });
 
-export const { addLog, setPageSize, setPageIndex, setLength, setLogs } = logSlice.actions;
+export const { addLog, setPageSize, setPageIndex, setLength } = logSlice.actions;
 
 export const selectLogs = (state: RootState) => state.logs;
 export default logSlice.reducer;

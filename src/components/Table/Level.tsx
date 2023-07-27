@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material";
 
 export default function Level({ level }: { level: string }) {
-  let color: string;
+  let color: "warning" | "error" | "success";
   switch (level) {
     case "warning":
       color = "warning";

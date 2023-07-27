@@ -34,6 +34,7 @@ export const useWebSocketHook = () => {
 
   useEffect(() => {
     if (!ws.current) return;
+    // @ts-ignore
     ws.current.on('data', (data) => {
       receiveLogs(data);
     });
