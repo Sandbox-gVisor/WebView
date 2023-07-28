@@ -7,18 +7,15 @@ import AppBar from "./Sidebar/AppBar";
 
 export default function Main() {
   return (
-    <Box sx={{ width: "100vw", height: "100vh" }}>
+    <Box sx={{ width: "100vw", maxHeight: "100vh", minHeight: "100vh" }}>
       <AppBar />
       <Box sx={{ display: "flex" }}>
         <Sidebar />
         <Box sx={{
           display: "flex", flexDirection: "column",
-          justifyContent: "space-between", padding: 4
+          justifyContent: "space-between", padding: 4,
         }}>
-
-          <Box sx={{ height: "max-content" }}>
-            <Table />
-          </Box>
+          <Table />
           <Pagginator />
         </Box>
       </Box>

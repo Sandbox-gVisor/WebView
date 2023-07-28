@@ -9,12 +9,12 @@ export default function Header() {
       <TableRow>
         <TableCell />
         <TableCell align="center">Level</TableCell>
-        <TableCell align="center">Time</TableCell>
+        <TableCell align="left">Time</TableCell>
         <TableCell>LogPrefix</TableCell>
         <TableCell>Taskname</TableCell>
-        <TableCell align="right">SysCallName</TableCell>
-        <TableCell align="right">LogType</TableCell>
-        <TableCell align="right">Output</TableCell>
+        <TableCell align="left">SysCallName</TableCell>
+        <TableCell align="center">LogType</TableCell>
+        <TableCell align="left">Output</TableCell>
       </TableRow>
     </TableHead>
   );
