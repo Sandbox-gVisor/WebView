@@ -4,7 +4,6 @@ export type TConnOut = {
 }
 
 export const getConnOut = (connection: { connected: boolean, pulled: boolean }) => {
-  console.log(connection)
   const res: TConnOut = {
     style: "error.main",
     message: "not connected",

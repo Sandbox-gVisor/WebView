@@ -20,8 +20,8 @@ export const useWebSocketHook = () => {
   const receiveLogs = (data: any) => {
     const logs = data;
     console.log(logs);
-    dispatch(setLogs(logs));
     dispatch(setPulled(true));
+    dispatch(setLogs(logs));
   }
 
   useEffect(() => {
@@ -62,7 +62,6 @@ export const useWebSocketHook = () => {
     ws.current.emit("filter", filterStore);
     console.log("-----");
     console.log(filterStore);
-    console.log(logStore);
     console.log("-----")
     dispatch(setClicked(false));
     dispatch(setLogs([]));

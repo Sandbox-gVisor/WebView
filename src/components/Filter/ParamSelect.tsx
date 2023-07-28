@@ -25,7 +25,6 @@ export default function ParamSelect(props: ISelcetProps) {
   };
 
   const submit = (value: string[]) => {
-    console.log(value);
     if (props.type == "level") {
       props.submitParams({
         info: value.includes("info"),

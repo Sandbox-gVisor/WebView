@@ -35,7 +35,7 @@ export default function Filter() {
         <IconButton color="success" onClick={() => { dispatch(setApplyed(true)); dispatch(setClicked(true)); }}>
           <CheckIcon />
         </IconButton>
-        <IconButton color="error" onClick={() => { dispatch(setApplyed(true)); dispatch(setClicked(true)); }}>
+        <IconButton color="error" onClick={() => { dispatch(setApplyed(false)); dispatch(setClicked(true)); }}>
           <ClearIcon />
         </IconButton>
       </Stack>
