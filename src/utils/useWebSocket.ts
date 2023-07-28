@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { useAppSelector } from '@/app/hooks';
 import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
 import { setLogs, selectLogs, setLength } from '@/store/logSlice';
-import { selectFilter } from '@/store/filterSlice';
+import { selectFilter, setClicked } from '@/store/filterSlice';
 
 
 export const useWebSocketHook = () => {
@@ -20,8 +20,8 @@ export const useWebSocketHook = () => {
   const receiveLogs = (data: any) => {
     const logs = data;
     console.log(logs);
-    dispatch(setLogs(logs));
     dispatch(setPulled(true));
+    dispatch(setLogs(logs));
   }
 
   useEffect(() => {
@@ -57,10 +57,15 @@ export const useWebSocketHook = () => {
 
   useEffect(() => {
     if (!ws.current) return;
+    if (!filterStore.clicked) return;
     // @ts-ignore
     ws.current.emit("filter", filterStore);
+    console.log("-----");
+    console.log(filterStore);
+    console.log("-----")
+    dispatch(setClicked(false));
     dispatch(setLogs([]));
-  }, [filterStore]);
+  }, [filterStore.clicked]);
 
   return { isPaused };
 };

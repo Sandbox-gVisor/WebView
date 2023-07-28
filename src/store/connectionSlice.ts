@@ -10,7 +10,7 @@ export interface ConnectionState {
 
 const initialState: ConnectionState = {
   addressStatus: false,
-  address: "ws://localhost:8888",
+  address: "ws://localhost:3001",
   connected: false,
   pulled: false,
 };

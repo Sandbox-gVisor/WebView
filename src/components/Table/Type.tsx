@@ -7,5 +7,5 @@ export default function Type(props: { type: string }) {
     label = "exit";
     color = "secondary";
   }
-  return <Chip label={label} color={color} variant="filled" sx={{ width: "100%" }} />
+  return <Chip label={label} color={color} variant="outlined" sx={{ width: "100%" }} />
 }
