@@ -13,7 +13,7 @@ export const getConnOut = (connection: { connected: boolean, pulled: boolean }) 
     res.message = "pulling...";
   }
   if (connection.pulled) {
-    res.style == "success.main";
+    res.style = "primary.main";
     res.message = "connected";
   }
   return res;
