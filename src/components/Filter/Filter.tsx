@@ -10,7 +10,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { useDispatch } from "react-redux";
 import {
   setApplyed, setType, setLevel, setPrefix,
-  setTaskname, setSysCallName
+  setTaskname, setSysCallName, setClicked
 } from "@/store/filterSlice";
 
 export default function Filter() {
@@ -32,10 +32,10 @@ export default function Filter() {
         submitParams={type => dispatch(setType(type))}
       />
       <Stack>
-        <IconButton color="success" onClick={() => dispatch(setApplyed(true))}>
+        <IconButton color="success" onClick={() => { dispatch(setApplyed(true)); dispatch(setClicked(true)); }}>
           <CheckIcon />
         </IconButton>
-        <IconButton color="error" onClick={() => dispatch(setApplyed(true))}>
+        <IconButton color="error" onClick={() => { dispatch(setApplyed(true)); dispatch(setClicked(true)); }}>
           <ClearIcon />
         </IconButton>
       </Stack>

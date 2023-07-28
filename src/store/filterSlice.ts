@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 
 export interface FilterState {
+  clicked: boolean;
   applyed: boolean;
   level: {
     debug: boolean,
@@ -18,6 +19,7 @@ export interface FilterState {
 }
 
 const initialState: FilterState = {
+  clicked: false,
   applyed: false,
   level: { debug: true, warning: true, info: true },
   type: { enter: true, exit: true },
@@ -47,13 +49,17 @@ export const filterStore = createSlice({
     },
     setType: (state, action: PayloadAction<{ enter: boolean, exit: boolean }>) => {
       state.type = action.payload;
+    },
+    setClicked: (state, action: PayloadAction<boolean>) => {
+      state.clicked = action.payload;
     }
   },
 });
 
 export const {
   setApplyed, setPrefix, setTaskname,
-  setSysCallName, setLevel, setType
+  setSysCallName, setLevel, setType,
+  setClicked
 } = filterStore.actions;
 export const selectFilter = (state: RootState) => state.filter;
 export default filterStore.reducer;
