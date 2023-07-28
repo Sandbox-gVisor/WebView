@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 
 import Sidebar from "./Sidebar/Sidebar";
 import Table from "./Table/Table";
-import Pagginator from "./Page/Pagginator";
 import AppBar from "./Sidebar/AppBar";
 
 export default function Main() {
@@ -16,7 +15,6 @@ export default function Main() {
           justifyContent: "space-between", padding: 4,
         }}>
           <Table />
-          <Pagginator />
         </Box>
       </Box>
     </Box>
