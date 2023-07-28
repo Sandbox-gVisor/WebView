@@ -12,7 +12,7 @@ export default function RegexFilter(props: { label: string, submitRegex: (regex:
 
   return (
     <TextField
-      sx={{ width: 150 }}
+      sx={{ width: 120 }}
       label={props.label}
       defaultValue=""
       value={value}

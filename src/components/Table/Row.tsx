@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  TableRow, TableCell, IconButton, Collapse,
+  TableRow, TableCell, IconButton, Collapse, Box
 } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -10,6 +10,7 @@ import AdditionalInfo from "./AdditionalInfo";
 import Type from "./Type";
 import Level from "./Level";
 import Time from "./Time";
+import { highlightPattern } from "@/utils/table";
 
 export default function Row(props: { row: TLog }) {
   const { row } = props;
@@ -38,7 +39,13 @@ export default function Row(props: { row: TLog }) {
         <TableCell align="center"><Type type={row.LogType} /></TableCell>
         <TableCell align="left" sx={{
           width: 500, overflow: 'auto',
-        }}>{row.Output}</TableCell>
+        }}>
+          <Box sx={{ whiteSpace: 'pre-wrap', fontFamily: "JetBrains Mono Regular" }}>
+            <div className="Output"
+              dangerouslySetInnerHTML={{ __html: highlightPattern(row.Output.join("\n")) }}
+            />
+          </Box>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
@@ -47,7 +54,7 @@ export default function Row(props: { row: TLog }) {
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 

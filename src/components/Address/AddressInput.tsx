@@ -39,11 +39,11 @@ export default function AddressInput() {
       paddingLeft: 2, paddingRight: 4, paddingTop: 1
     }}>
       <FormControl fullWidth sx={{ m: 1 }}>
-        <InputLabel htmlFor="outlined-adornment-amount">WS address</InputLabel>
+        <InputLabel htmlFor="address-input">WS address</InputLabel>
         <OutlinedInput
-          id="outlined-adornment-amount"
+          id="address-input"
           startAdornment={<InputAdornment position="start">ws://</InputAdornment>}
-          label="Address"
+          label="WS Address"
           value={value}
           onChange={handleChange}
           endAdornment={<InputAdornment position="end">
