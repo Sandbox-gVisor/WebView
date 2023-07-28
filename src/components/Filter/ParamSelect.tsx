@@ -41,7 +41,7 @@ export default function ParamSelect(props: ISelcetProps) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 120 }} size='small'>
+      <FormControl sx={{ width: 120 }} size='small'>
         <InputLabel>{props.label}</InputLabel>
         <Select
           multiple

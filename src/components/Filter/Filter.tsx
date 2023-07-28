@@ -16,10 +16,11 @@ import {
 export default function Filter() {
   const dispatch = useDispatch();
   return (
-    <Stack direction="row" spacing={2} sx={{
-      alignItems: "center", width: "min-content", alignSelf: "center",
-      marginBottom: 4
-    }} component={Paper}>
+    <Stack spacing={2} component={Paper}
+      sx={{
+        alignItems: "center", width: "min-content", alignSelf: "center",
+        marginBottom: 4, padding: 2
+      }}>
       <ParamSelect
         items={["info", "debug", "warning"]} label="Level" type="level"
         submitParams={level => dispatch(setLevel(level))}
@@ -31,7 +32,7 @@ export default function Filter() {
         items={["enter", "exit"]} label="Type" type="type"
         submitParams={type => dispatch(setType(type))}
       />
-      <Stack>
+      <Stack direction="row">
         <IconButton color="success" onClick={() => { dispatch(setApplyed(true)); dispatch(setClicked(true)); }}>
           <CheckIcon />
         </IconButton>
