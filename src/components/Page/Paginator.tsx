@@ -1,12 +1,14 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { selectLogs, setPageIndex, setPageSize } from "@/store/logSlice";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import {selectLogs, setPageIndex, setPageSize} from "@/store/logSlice";
 import {
   Box, TextField, Paper, Typography
 } from "@mui/material";
+import React from "react";
 
-export default function Pagginator() {
+export default function Paginator() {
   const dispatch = useAppDispatch();
   const logStore = useAppSelector(selectLogs);
+  const countPages = Math.round(logStore.total / logStore.pageSize);
 
   const handleChangePage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -27,28 +29,20 @@ export default function Pagginator() {
       display: "flex", justifyContent: 'space-between', flexDirection: "column"
     }}>
       <TextField type="number" size="small" label="rows per page"
-        sx={{ marginBottom: 2 }}
-        inputProps={{ min: 1, max: 1000 }}
-        value={logStore.pageSize}
-        onChange={handleChangeRowsPerPage}
+                 sx={{marginBottom: 2}}
+                 inputProps={{min: 1, max: 1000}}
+                 value={logStore.pageSize}
+                 onChange={handleChangeRowsPerPage}
       />
       <TextField type="number" size="small" label="current page"
-        sx={{ marginBottom: 2 }}
-        inputProps={{ min: 0, max: logStore.total }}
-        value={logStore.pageIndex}
-        onChange={handleChangePage}
+                 sx={{marginBottom: 2}}
+                 inputProps={{min: 0, max: countPages - 1}}
+                 value={logStore.pageIndex}
+                 onChange={handleChangePage}
       />
       <Typography variant="caption">
-        in total: {logStore.total} pages
+        in total: {countPages} pages
       </Typography>
-      {/*
-      component="div"
-      count={logStore.total}
-      page={logStore.pageIndex}
-      onPageChange={handleChangePage}
-      rowsPerPage={logStore.pageSize}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-      */}
     </Box>
   );
 }
