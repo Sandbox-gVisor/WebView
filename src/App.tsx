@@ -6,7 +6,6 @@ import Main from "./components/Main";
 
 function App() {
   const { isPaused } = useWebSocketHook();
-  console.log(isPaused);
   return (
     <ThemeProvider theme={theme}>
       <Main />

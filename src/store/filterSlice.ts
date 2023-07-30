@@ -3,7 +3,7 @@ import { RootState } from '@/app/store';
 
 export interface FilterState {
   clicked: boolean;
-  applyed: boolean;
+  applied: boolean;
   level: {
     debug: boolean,
     warning: boolean,
@@ -20,7 +20,7 @@ export interface FilterState {
 
 const initialState: FilterState = {
   clicked: false,
-  applyed: false,
+  applied: false,
   level: { debug: true, warning: true, info: true },
   type: { enter: true, exit: true },
   prefix: "",
@@ -32,8 +32,8 @@ export const filterStore = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    setApplyed: (state, action: PayloadAction<boolean>) => {
-      state.applyed = action.payload;
+    setApplied: (state, action: PayloadAction<boolean>) => {
+      state.applied = action.payload;
     },
     setPrefix: (state, action: PayloadAction<string>) => {
       state.prefix = action.payload;
@@ -57,7 +57,7 @@ export const filterStore = createSlice({
 });
 
 export const {
-  setApplyed, setPrefix, setTaskname,
+  setApplied, setPrefix, setTaskname,
   setSysCallName, setLevel, setType,
   setClicked
 } = filterStore.actions;

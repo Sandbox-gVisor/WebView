@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { TextField } from "@mui/material";
+import {useState} from "react"
+import {TextField} from "@mui/material";
 
 
 export default function RegexFilter(props: { label: string, submitRegex: (regex: string) => void }) {
@@ -12,7 +12,7 @@ export default function RegexFilter(props: { label: string, submitRegex: (regex:
 
   return (
     <TextField
-      sx={{ width: 120 }}
+      sx={{width: 120}}
       label={props.label}
       defaultValue=""
       value={value}

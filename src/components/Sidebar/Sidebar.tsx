@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Filter from "../Filter/Filter";
-import Pagginator from "../Page/Pagginator";
+import Pagginator from "../Page/Paginator.tsx";
 
 export default function Sidebar() {
   return (
