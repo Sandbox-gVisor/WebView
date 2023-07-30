@@ -18,7 +18,7 @@ export default function Filter() {
   return (
     <Stack spacing={2} component={Paper}
            sx={{
-             alignItems: "center", width: "min-content", alignSelf: "center",
+             alignItems: "center", alignSelf: "center",
              marginBottom: 4, padding: 2
            }}>
       <ParamSelect

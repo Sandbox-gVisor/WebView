@@ -8,7 +8,7 @@ import React from "react";
 export default function Paginator() {
   const dispatch = useAppDispatch();
   const logStore = useAppSelector(selectLogs);
-  const countPages = Math.round(logStore.total / logStore.pageSize);
+  const countPages = Math.ceil(logStore.total / logStore.pageSize);
 
   const handleChangePage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

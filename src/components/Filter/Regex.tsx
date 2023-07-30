@@ -1,5 +1,5 @@
 import {useState} from "react"
-import {TextField, Alert} from "@mui/material";
+import {TextField, Alert, Box} from "@mui/material";
 import {isValidRegex} from "@/utils";
 
 
@@ -18,16 +18,18 @@ export default function RegexFilter(props: { label: string, submitRegex: (regex:
   }
 
   return (
-    <>
+    <Box>
       <TextField
-        sx={{width: 120}}
+        sx={{width: "100%"}}
         label={props.label}
         defaultValue=""
         value={value}
         onChange={(event) => handleChange(event.target.value)}
         size="small"
+        margin="dense"
       />
-      {(!isValid) && <Alert severity="error">invalid regexp</Alert>}
-    </>
+      {(!isValid) && <Alert severity="error">invalid regexp</Alert>
+      }
+    </Box>
   );
 }
