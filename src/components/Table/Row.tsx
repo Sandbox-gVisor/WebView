@@ -10,7 +10,7 @@ import AdditionalInfo from "./AdditionalInfo";
 import Type from "./Type";
 import Level from "./Level";
 import Time from "./Time";
-import { highlightPattern } from "@/utils/table";
+import { highlightPattern } from "@/utils";
 
 export default function Row(props: { row: TLog }) {
   const { row } = props;

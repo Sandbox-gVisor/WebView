@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import {useState, useEffect, useRef} from 'react';
+import {useDispatch} from 'react-redux';
 import io from 'socket.io-client';
 
-import { useAppSelector } from '@/app/hooks';
-import { selectConnection, setConnected, setPulled } from '@/store/connectionSlice';
-import { setLogs, selectLogs, setLength } from '@/store/logSlice';
-import { selectFilter, setClicked } from '@/store/filterSlice';
+import {useAppSelector} from '@/app/hooks';
+import {selectConnection, setConnected, setPulled} from '@/store/connectionSlice';
+import {setLogs, selectLogs, setLength} from '@/store/logSlice';
+import {selectFilter, setClicked} from '@/store/filterSlice';
 
 
 export const useWebSocketHook = () => {
@@ -19,8 +19,9 @@ export const useWebSocketHook = () => {
   // @ts-ignore
   const receiveLogs = (data: any) => {
     const logs = data;
-    console.log(logs);
-    dispatch(setPulled(true));
+    if (!conn.pulled) {
+      dispatch(setPulled(true));
+    }
     dispatch(setLogs(logs));
   }
 
@@ -59,13 +60,12 @@ export const useWebSocketHook = () => {
     if (!ws.current) return;
     if (!filterStore.clicked) return;
     // @ts-ignore
-    ws.current.emit("filter", filterStore);
-    console.log("-----");
-    console.log(filterStore);
-    console.log("-----")
+    ws.current.emit("filter", filterStore, (response) => {
+      dispatch(setLogs(response.logs));
+      dispatch(setLength(response.len));
+    });
     dispatch(setClicked(false));
-    dispatch(setLogs([]));
   }, [filterStore.clicked]);
 
-  return { isPaused };
+  return {isPaused};
 };

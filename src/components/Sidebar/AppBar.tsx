@@ -1,7 +1,7 @@
 import {
   AppBar, Box,
 } from "@mui/material";
-import AddressInput from "../Address/AddressInput";
+import AddressInput from "@/components/Address/AddressInput";
 
 export default function HeaderBar() {
   return (
