@@ -3,10 +3,12 @@ import {selectLogs, setPageIndex, setPageSize} from "@/store/logSlice";
 import {
   Box, TextField, Paper, Typography
 } from "@mui/material";
+import React from "react";
 
 export default function Paginator() {
   const dispatch = useAppDispatch();
   const logStore = useAppSelector(selectLogs);
+  const countPages = logStore.total / logStore.pageSize;
 
   const handleChangePage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -34,21 +36,13 @@ export default function Paginator() {
       />
       <TextField type="number" size="small" label="current page"
                  sx={{marginBottom: 2}}
-                 inputProps={{min: 0, max: logStore.total}}
+                 inputProps={{min: 0, max: countPages - 1}}
                  value={logStore.pageIndex}
                  onChange={handleChangePage}
       />
       <Typography variant="caption">
-        in total: {logStore.total} pages
+        in total: {countPages} pages
       </Typography>
-      {/*
-      component="div"
-      count={logStore.total}
-      page={logStore.pageIndex}
-      onPageChange={handleChangePage}
-      rowsPerPage={logStore.pageSize}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-      */}
     </Box>
   );
 }
