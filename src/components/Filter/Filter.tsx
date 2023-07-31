@@ -1,3 +1,4 @@
+import React from "react";
 import {
   IconButton,
   Paper, Stack,
@@ -13,7 +14,7 @@ import {
   setTaskname, setSysCallName, setClicked
 } from "@/store/filterSlice";
 
-export default function Filter() {
+function Filter() {
   const dispatch = useDispatch();
   return (
     <Stack spacing={2} component={Paper}
@@ -49,3 +50,5 @@ export default function Filter() {
     </Stack>
   );
 }
+
+export const FilterComponent = React.memo(Filter);

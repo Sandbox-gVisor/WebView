@@ -1,5 +1,5 @@
 import { Table, TableContainer, TableBody, Paper } from "@mui/material";
-import Header from "./Header";
+import {HeaderComponent as Header} from "./Header";
 import Row from "./Row";
 
 import { TLog } from "@/utils/types";
