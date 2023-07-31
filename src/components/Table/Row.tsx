@@ -10,7 +10,7 @@ import AdditionalInfo from "./AdditionalInfo";
 import Type from "./Type";
 import Level from "./Level";
 import Time from "./Time";
-import { highlightPattern } from "@/utils";
+import { renderOutput } from "@/utils";
 
 export default function Row(props: { row: TLog }) {
   const { row } = props;
@@ -42,7 +42,7 @@ export default function Row(props: { row: TLog }) {
         }}>
           <Box sx={{ whiteSpace: 'pre-wrap', fontFamily: "JetBrains Mono Regular" }}>
             <div className="Output"
-              dangerouslySetInnerHTML={{ __html: highlightPattern(row.Output.join("\n")) }}
+              dangerouslySetInnerHTML={{ __html: renderOutput(row.Output) }}
             />
           </Box>
         </TableCell>

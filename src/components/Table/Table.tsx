@@ -10,8 +10,8 @@ export default function CustomTable() {
   const logStore = useAppSelector(selectLogs);
 
   return (
-    <TableContainer component={Paper} sx={{ minWidth: 1100, maxWidth: "90vw" }}>
-      <Table size="small" sx={{ maxWidth: 1100, minWidth: "85vw" }}>
+    <TableContainer component={Paper} sx={{ minWidth: 1000, maxWidth: "85vw" }}>
+      <Table size="small" sx={{ maxWidth: 1000, minWidth: "75vw" }}>
         <Header />
         <TableBody sx={{ height: 400, maxHeight: 400 }}>
           {logStore.logs.map((log: TLog, index: number) => {
