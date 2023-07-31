@@ -1,4 +1,14 @@
-export function highlightPattern(text: string) {
+export function renderOutput(output: any) {
+  if (!output) return "";
+  try {
+    return highlightPattern(output.join("\n"));
+  } catch (error) {
+    console.warn(error);
+    return "";
+  }
+}
+
+function highlightPattern(text: string) {
   text = highlightNull(text);
   text = highlightJSON(text);
   return highlightAddress(text)

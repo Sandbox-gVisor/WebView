@@ -25,9 +25,11 @@ export default function HeaderBar() {
           </div>
         </Box>
         <Box sx={{display: "flex"}}>
+          {/*
           <Button sx={{color: "#202020"}} onClick={handleClick}>
             switch to {page === "view" ? "edit" : "view"} page
           </Button>
+          */}
           <AddressInput/>
         </Box>
       </Box>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   Tabs, Tab, Box, Typography
 } from '@mui/material';
+import ChangeCallback from "@/components/Edit/ChangeCallback.tsx";
 
 function TabPanel(props: {
   children?: React.ReactNode;
@@ -14,7 +15,7 @@ function TabPanel(props: {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
+      id={`tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
@@ -30,7 +31,7 @@ function TabPanel(props: {
 export default function EditPage() {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -45,7 +46,7 @@ export default function EditPage() {
           <Tab label="change state" id="tab_4" value={4}/>
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}> Item One </TabPanel>
+      <TabPanel value={value} index={0}> <ChangeCallback /> </TabPanel>
       <TabPanel value={value} index={1}> Item Two </TabPanel>
       <TabPanel value={value} index={2}> Item Three </TabPanel>
       <TabPanel value={value} index={3}> Item 4 </TabPanel>
