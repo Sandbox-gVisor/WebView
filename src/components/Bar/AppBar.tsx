@@ -1,18 +1,9 @@
 import {
-  AppBar, Box, Button
+  AppBar, Box
 } from "@mui/material";
 import AddressInput from "@/components/Address/AddressInput";
-import {useAppDispatch, useAppSelector} from "@/app/hooks.ts";
-import {selectPage, setNavigation} from "@/store/navigationSlice.ts";
 
 export default function HeaderBar() {
-  const dispatch = useAppDispatch();
-  const page = useAppSelector(selectPage);
-
-  const handleClick = () => {
-    dispatch(setNavigation(page == "view" ? "edit" : "view"));
-  }
-
   return (
     <AppBar position="static" color="default">
       <Box sx={{display: "flex", justifyContent: 'space-between',}}>
