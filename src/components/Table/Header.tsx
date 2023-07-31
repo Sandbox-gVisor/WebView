@@ -1,9 +1,10 @@
+import React from "react";
 import {
   TableHead, TableRow, TableCell
 } from "@mui/material";
 
 
-export default function Header() {
+function Header() {
   return (
     <TableHead>
       <TableRow>
@@ -19,3 +20,5 @@ export default function Header() {
     </TableHead>
   );
 }
+
+export const HeaderComponent = React.memo(Header);

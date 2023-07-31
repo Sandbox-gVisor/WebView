@@ -1,9 +1,10 @@
+import React from "react";
 import {
   AppBar, Box
 } from "@mui/material";
 import AddressInput from "@/components/Address/AddressInput";
 
-export default function HeaderBar() {
+function HeaderBar() {
   return (
     <AppBar position="static" color="default">
       <Box sx={{display: "flex", justifyContent: 'space-between',}}>
@@ -27,3 +28,5 @@ export default function HeaderBar() {
     </AppBar>
   );
 }
+
+export const MemoizedAppBar = React.memo(HeaderBar);

@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export default function Paginator() {
+function Paginator() {
   const dispatch = useAppDispatch();
   const logStore = useAppSelector(selectLogs);
   const countPages = Math.ceil(logStore.total / logStore.pageSize);
@@ -46,3 +46,5 @@ export default function Paginator() {
     </Box>
   );
 }
+
+export const PaginatorComponent = React.memo(Paginator);
