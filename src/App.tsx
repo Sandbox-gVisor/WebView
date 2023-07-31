@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@mui/material/styles';
 
 import { useWebSocketHook, theme } from "./utils";
-import Main from "./components/Main";
+import Main from "./pages/Main.tsx";
 
 function App() {
   const { isPaused } = useWebSocketHook();
