@@ -9,10 +9,10 @@ function HeaderBar() {
     <AppBar position="static" color="default">
       <Box sx={{display: "flex", justifyContent: 'space-between',}}>
         <Box sx={{
-          padding: 3, display: "flex", alignItems: "center",
+          padding: 2, display: "flex", alignItems: "center",
         }}>
-          <img src="/logo.png" width="48" height="48"/>
-          <div className="Logo" style={{marginLeft: 20}}>
+          <img src="/logo.png" width="70" height="70"/>
+          <div className="Logo" style={{marginLeft: 10}}>
             gWisord
           </div>
         </Box>
