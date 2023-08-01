@@ -2,24 +2,24 @@ import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
   palette: {
-    // primary: {
-    //   main: '#ecd6bf',
-    // },
-    // secondary: {
-    //   main: '#171725',
-    // },
-    // error: {
-    //   main: '#e46a1a',
-    // },
-    // info: {
-    //   main: '#fefdfc',
-    // },
-    // warning: {
-    //   main: '#eeaf53',
-    // },
-    // success: {
-    //   main: '#61367d',
-    // },
+    primary: {
+      main: '#7b77b6',
+    },
+    secondary: {
+      main: '#bb77bb',
+    },
+    error: {
+      main: '#fd3a3a',
+    },
+    info: {
+      main: '#2a22ba',
+    },
+    warning: {
+      main: '#fdb13a',
+    },
+    success: {
+      main: '#2ED47B',
+    },
   },
 });
 
